@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import Container from "./Container";
-import Row from "./Row";
-import Col from "./Col";
-import Card from "./Card";
-import SearchForm from "./SearchForm";
-import BookDetail from "./BookDetail";
+import Container from "../components/Container";
+import Row from "../components/Row";
+import Col from "../components/Col";
+import Card from "../components/Card";
+import SearchForm from "../components/SearchForm";
+import BookDetail from "../components/BookDetail";
+
 import API from "../utils/API";
 
 class GoogleContainer extends Component {
@@ -43,6 +44,15 @@ class GoogleContainer extends Component {
     return (
       <Container>
         <Row>
+        <Col size="md-4">
+            <Card heading="Search">
+              <SearchForm
+                value={this.state.search}
+                handleInputChange={this.handleInputChange}
+                handleFormSubmit={this.handleFormSubmit}
+              />
+            </Card>
+          </Col>
           <Col size="md-8">
             <Card
               heading={this.state.result.totalItems || "Search for a Book to Begin"}
@@ -60,15 +70,7 @@ class GoogleContainer extends Component {
               )}
             </Card>
           </Col>
-          <Col size="md-4">
-            <Card heading="Search">
-              <SearchForm
-                value={this.state.search}
-                handleInputChange={this.handleInputChange}
-                handleFormSubmit={this.handleFormSubmit}
-              />
-            </Card>
-          </Col>
+          
         </Row>
       </Container>
     );
