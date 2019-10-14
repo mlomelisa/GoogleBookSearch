@@ -7,16 +7,16 @@ import SearchForm from "../components/SearchForm";
 import BookDetail from "../components/BookDetail";
 import API from "../utils/API";
 
-class GoogleContainer extends Component {
+class Saved extends Component {
   state = {
     result: {},
     search: ""
   };
 
   // When this component mounts, search for the movie "The Matrix"
-  componentDidMount() {
-    this.searchBooks("The Hunger Games");
-  }
+  // componentDidMount() {
+  //   this.searchBooks("The Hunger Games");
+  // }
 
   searchBooks = query => {
     API.search(query)
@@ -42,16 +42,15 @@ class GoogleContainer extends Component {
   render() {
     return (
       <Container>
-
-            <div heading="Search">
+        <div heading="Search">
               <SearchForm
                 value={this.state.search}
                 handleInputChange={this.handleInputChange}
                 handleFormSubmit={this.handleFormSubmit}
               />
-            </div>
-
-            <div
+          </div>
+          <div
+            
               heading={this.state.result.totalItems || "Search for a Book to Begin"}
             >
               {this.state.result.totalItems ? (
@@ -64,11 +63,11 @@ class GoogleContainer extends Component {
                 />
               ) : (
                 <h3>No Results to Display</h3>
-              )}
-            </div>
+              )}    
+        </div>
       </Container>
     );
   }
 }
 
-export default GoogleContainer;
+export default Saved;
