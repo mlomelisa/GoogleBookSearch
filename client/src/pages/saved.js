@@ -4,7 +4,7 @@ import Row from "../components/Row";
 import Col from "../components/Col";
 import Card from "../components/Card";
 import SearchForm from "../components/SearchForm";
-import BookDetail from "../components/BookDetail";
+import {BookDetail, BookList} from "../components/BookDetail";
 import API from "../utils/API";
 
 class Saved extends Component {

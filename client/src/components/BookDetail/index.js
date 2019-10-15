@@ -4,18 +4,25 @@ import Row from "../Row";
 import Col from "../Col";
 import Style from "./style.css";
 
-function BookDetail(props) {
+// RecipeList renders a bootstrap list item
+export function BookList({ children }) {
+  return <ul className="list-group">{children}</ul>;
+}
+
+
+
+export function BookDetail(props) {
   return (
     <div className="text-center">
-    <Container>
+    <Container >
      <Row >
       <Col size="md-6">
       <h3>{props.title}</h3>
       </Col>
       <Col size="md-6">
-          <div class="btn-group">
-            <button type="button" class="btn btn-primary">View</button>
-            <button type="button" class="btn btn-primary">Delete</button>
+          <div className="btn-group">
+            <button type="button" className="btn btn-primary">View</button>
+            <button type="button" className="btn btn-primary">Delete</button>
           </div>
       </Col>
      </Row> 
@@ -34,4 +41,4 @@ function BookDetail(props) {
   );
 }
 
-export default BookDetail;
+

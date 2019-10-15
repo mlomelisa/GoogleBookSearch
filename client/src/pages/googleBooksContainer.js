@@ -4,12 +4,12 @@ import Row from "../components/Row";
 import Col from "../components/Col";
 import Card from "../components/Card";
 import SearchForm from "../components/SearchForm";
-import BookDetail from "../components/BookDetail";
+import {BookDetail, BookList} from "../components/BookDetail";
 import API from "../utils/API";
 
 class GoogleContainer extends Component {
   state = {
-    result: {},
+    result: [],
     search: ""
   };
 
@@ -20,7 +20,7 @@ class GoogleContainer extends Component {
 
   searchBooks = query => {
     API.search(query)
-      .then(res => this.setState({ result: res.data }))
+      .then(res => this.setState({ result: res.data.items }))
       .catch(err => console.log(err));
       
   };
@@ -40,6 +40,7 @@ class GoogleContainer extends Component {
   };
 
   render() {
+    console.log(this.state.result)
     return (
       <Container>
 
@@ -54,18 +55,27 @@ class GoogleContainer extends Component {
             <div
               heading={this.state.result.totalItems || "Search for a Book to Begin"}
             >
-              {this.state.result.totalItems ? (
-                <BookDetail
-                  title={this.state.result.items[0].volumeInfo.title}
-                  src={this.state.result.items[0].volumeInfo.imageLinks.thumbnail}
-                  authors={this.state.result.items[0].volumeInfo.authors}
-                  description={this.state.result.items[0].volumeInfo.description}
-                  link={this.state.result.items[0].selfLink}          
-                />
-              ) : (
+              {this.state.result.length === 0 ? (
                 <h3>No Results to Display</h3>
+              ) : (
+              <BookList>
+                {this.state.result.map((element, index) => {
+                  
+                  return (
+                    
+                    <BookDetail
+                    key={element.volumeInfo.title}
+                    title={element.volumeInfo.title}
+                    src={element.volumeInfo.imageLinks.thumbnail}
+                    authors={element.volumeInfo.authors}
+                    description={element.volumeInfo.description}
+                    link={element.selfLink}   
+                    /> 
+                  )
+                })} 
+              </BookList>   
               )}
-            </div>
+          </div>
       </Container>
     );
   }
