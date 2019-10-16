@@ -14,9 +14,9 @@ class GoogleContainer extends Component {
   };
 
   // When this component mounts, search for the movie "The Matrix"
-  componentDidMount() {
-    this.searchBooks("The Hunger Games");
-  }
+  // componentDidMount() {
+  //   this.searchBooks("The Hunger Games");
+  // }
 
   searchBooks = query => {
     API.search(query)
@@ -39,8 +39,39 @@ class GoogleContainer extends Component {
     this.searchBooks(this.state.search);
   };
 
+
+
+  // handleChange = (event) => {
+  //   event.preventDefault();
+
+  //   this.setState({
+  //     id: event.target.id,
+  //     author: event.target.author
+    
+  //    })
+  //    return console.log(this.state.author)
+
+  // }
+
+  
+
+    handleChange = (title, src, authors, description, link) => {
+    
+
+    this.setState({
+   
+      title: title,
+      src: src,
+      authors: authors,
+      description: description,
+      link: link
+     })
+     return console.log(this.state.title, this.state.src, this.state.authors, this.state.description ,this.state.link)
+
+  }
+
   render() {
-    console.log(this.state.result)
+    
     return (
       <Container>
 
@@ -62,14 +93,18 @@ class GoogleContainer extends Component {
                 {this.state.result.map((element, index) => {
                   
                   return (
-                    
+                  
+ 
                     <BookDetail
-                    key={element.volumeInfo.title}
+                    key={element.id}
+                    id={element.id}
                     title={element.volumeInfo.title}
                     src={element.volumeInfo.imageLinks.thumbnail}
                     authors={element.volumeInfo.authors}
                     description={element.volumeInfo.description}
-                    link={element.selfLink}   
+                    link={element.selfLink}
+                  // onClick={(e) => this.handleChange(e, element.volumeInfo.title)}
+                  onClick={() => this.handleChange(element.volumeInfo.title, element.volumeInfo.imageLinks.thumbnail, element.volumeInfo.authors, element.volumeInfo.description, element.selfLink)}
                     /> 
                   )
                 })} 

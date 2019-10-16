@@ -22,13 +22,14 @@ export function BookDetail(props) {
       <Col size="md-6">
           <div className="btn-group">
             <button type="button" className="btn btn-primary">View</button>
-            <button type="button" className="btn btn-primary">Delete</button>
+      
+            <button type="button" className="btn btn-primary" data-author={props.authors} id={props.id} onClick={props.onClick}>Save</button>
           </div>
       </Col>
      </Row> 
      <Row >
        <Col size="md-4">
-          <img alt={props.title} className="img-fluid" src={props.image} style={{ margin: "0 auto" }} />
+          <img alt={props.title} className="img-fluid" src={props.src} style={{ margin: "0 auto" }} />
        </Col>
       <Col size="md-8">
           <h3>Authors: {props.authors}</h3>
