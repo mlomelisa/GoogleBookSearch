@@ -21,7 +21,8 @@ export function BookDetail(props) {
       </Col>
       <Col size="md-6">
           <div className="btn-group">
-            <button type="button" className="btn btn-primary">View</button>
+          <a href={props.link} target="_blank">
+            <button type="button" className="btn btn-primary">View</button></a>
       
             <button type="button" className="btn btn-primary" data-author={props.authors} id={props.id} onClick={props.onClick}>Save</button>
           </div>
@@ -33,8 +34,8 @@ export function BookDetail(props) {
        </Col>
       <Col size="md-8">
           <h3>Authors: {props.authors}</h3>
-          <h3>Description: {props.description}</h3>
-          <h3>Link: {props.link}</h3>
+          <p>Description: {props.description}</p>
+          
       </Col>
       </Row>
       </Container>

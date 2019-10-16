@@ -10,13 +10,13 @@ import API from "../utils/API";
 class GoogleContainer extends Component {
   state = {
     result: [],
-    search: ""
+    search: "",
+    title:"",
+    authors:"",
+    description:"",
+    src:"",
+    link:""
   };
-
-  // When this component mounts, search for the movie "The Matrix"
-  // componentDidMount() {
-  //   this.searchBooks("The Hunger Games");
-  // }
 
   searchBooks = query => {
     API.search(query)
@@ -24,6 +24,22 @@ class GoogleContainer extends Component {
       .catch(err => console.log(err));
       
   };
+
+  loadBooks = () => {
+    
+    
+        this.setState({    
+        search: "",
+        title:"",
+        authors:"",
+        description:"",
+        src:"",
+        link:"" })
+  
+        
+  };
+
+
 
   handleInputChange = event => {
     const value = event.target.value;
@@ -34,40 +50,38 @@ class GoogleContainer extends Component {
   };
 
 
-  handleFormSubmit = event => {
+handleFormSubmit = event => {
     event.preventDefault();
     this.searchBooks(this.state.search);
   };
 
 
-
-  // handleChange = (event) => {
-  //   event.preventDefault();
-
-  //   this.setState({
-  //     id: event.target.id,
-  //     author: event.target.author
-    
-  //    })
-  //    return console.log(this.state.author)
-
-  // }
-
+//handleChange = (e, title, src, authors, description, link) => {
+ handleChange = (e) => {
+    e.preventDefault();
+    // this.setState({
+    //   thisBook:{
+    //   title: title,
+    //   src: src,
+    //   authors: authors,
+    //   description: description,
+    //   link: link
+    //   }
+    //  })
   
-
-    handleChange = (title, src, authors, description, link) => {
-    
-
-    this.setState({
-   
-      title: title,
-      src: src,
-      authors: authors,
-      description: description,
-      link: link
+     API.saveBook({
+      title: this.state.title,
+      image: this.state.src,
+      authors: this.state.authors,
+      description: this.state.description,
+      link: this.state.link
      })
-     return console.log(this.state.title, this.state.src, this.state.authors, this.state.description ,this.state.link)
+     .then(res => console.log(this.state.authors))
+     .catch(err => console.log(err));
 
+     
+    //  return console.log(this.state.thisBook)
+    
   }
 
   render() {
@@ -102,9 +116,8 @@ class GoogleContainer extends Component {
                     src={element.volumeInfo.imageLinks.thumbnail}
                     authors={element.volumeInfo.authors}
                     description={element.volumeInfo.description}
-                    link={element.selfLink}
-                  // onClick={(e) => this.handleChange(e, element.volumeInfo.title)}
-                  onClick={() => this.handleChange(element.volumeInfo.title, element.volumeInfo.imageLinks.thumbnail, element.volumeInfo.authors, element.volumeInfo.description, element.selfLink)}
+                    link={element.volumeInfo.previewLink} 
+                    onClick={(e) => this.handleChange(e, element.volumeInfo.title, element.volumeInfo.imageLinks.thumbnail, element.volumeInfo.authors, element.volumeInfo.description, element.selfLink)}
                     /> 
                   )
                 })} 
