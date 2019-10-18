@@ -15,13 +15,20 @@ class GoogleContainer extends Component {
     authors:"",
     description:"",
     src:"",
-    link:""
+    link:"",
+    id:"",
   };
 
   searchBooks = query => {
     API.search(query)
       .then(res => this.setState({ result: res.data.items }))
-      .catch(err => console.log(err));
+      .catch(() =>
+        this.setState({
+          result: [],
+          message: "No New Books Found, Try a Different Query"
+        })
+      );
+
       
   };
 
@@ -56,33 +63,22 @@ handleFormSubmit = event => {
   };
 
 
-//handleChange = (e, title, src, authors, description, link) => {
- handleChange = (e) => {
-    e.preventDefault();
-    // this.setState({
-    //   thisBook:{
-    //   title: title,
-    //   src: src,
-    //   authors: authors,
-    //   description: description,
-    //   link: link
-    //   }
-    //  })
-  
-     API.saveBook({
-      title: this.state.title,
-      image: this.state.src,
-      authors: this.state.authors,
-      description: this.state.description,
-      link: this.state.link
-     })
-     .then(res => console.log(this.state.authors))
-     .catch(err => console.log(err));
 
-     
-    //  return console.log(this.state.thisBook)
-    
-  }
+    handleBookSave = id => {
+      const book = this.state.result.find(book => book.id === id);
+  
+      API.saveBook({
+        id: book.id,
+        title: book.volumeInfo.title,
+        link: book.volumeInfo.infoLink,
+        authors: book.volumeInfo.authors,
+        description: book.volumeInfo.description,
+        image: book.volumeInfo.imageLinks.thumbnail
+      }).then(() => this.searchBooks());
+
+      return console.log(book.id)
+    };
+  
 
   render() {
     
@@ -117,7 +113,8 @@ handleFormSubmit = event => {
                     authors={element.volumeInfo.authors}
                     description={element.volumeInfo.description}
                     link={element.volumeInfo.previewLink} 
-                    onClick={(e) => this.handleChange(e, element.volumeInfo.title, element.volumeInfo.imageLinks.thumbnail, element.volumeInfo.authors, element.volumeInfo.description, element.selfLink)}
+         //           onClick={(e) => this.handleChange(e, element.volumeInfo.title, element.volumeInfo.imageLinks.thumbnail, element.volumeInfo.authors, element.volumeInfo.description, element.selfLink)}
+                    onClick={(e) => this.handleBookSave(element.id)}
                     /> 
                   )
                 })} 
