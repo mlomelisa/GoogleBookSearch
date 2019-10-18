@@ -110,7 +110,7 @@ handleFormSubmit = event => {
                     authors={element.volumeInfo.authors}
                     description={element.volumeInfo.description}
                     link={element.volumeInfo.previewLink} 
-         //           onClick={(e) => this.handleChange(e, element.volumeInfo.title, element.volumeInfo.imageLinks.thumbnail, element.volumeInfo.authors, element.volumeInfo.description, element.selfLink)}
+                    btnvalue="Save"
                     onClick={(e) => this.handleBookSave(element.id)}
                     /> 
                   )

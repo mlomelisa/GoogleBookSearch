@@ -24,7 +24,7 @@ export function BookDetail(props) {
           <a href={props.link} target="_blank" rel="noreferrer noopener">
             <button type="button" className="btn btn-primary">View</button></a>
       
-            <button type="button" className="btn btn-primary" data-author={props.authors} id={props.id} onClick={props.onClick}>Save</button>
+            <button type="button" className="btn btn-primary" data-author={props.authors} id={props.id} onClick={props.onClick}>{props.btnvalue}</button>
           </div>
       </Col>
      </Row> 

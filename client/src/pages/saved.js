@@ -87,7 +87,8 @@ handleFormSubmit = event => {
                     src={element.image}
                     authors={element.authors}
                     description={element.description}
-                    link={element.link} 
+                    link={element.link}
+                    btnvalue="Delete"
                     onClick={(e) => this.handleBookDelete(element._id)}
                     /> 
                   )
