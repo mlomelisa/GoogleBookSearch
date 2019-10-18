@@ -1,8 +1,5 @@
 import React, { Component } from "react";
 import Container from "../components/Container";
-import Row from "../components/Row";
-import Col from "../components/Col";
-import Card from "../components/Card";
 import SearchForm from "../components/SearchForm";
 import {BookDetail, BookList} from "../components/BookDetail";
 import API from "../utils/API";
@@ -10,20 +7,29 @@ import API from "../utils/API";
 class Saved extends Component {
   state = {
     result: [],
-    search: ""
+    search: "",
+    title:"",
+    authors:"",
+    description:"",
+    src:"",
+    link:"",
+    id:"",
+  };
+  componentDidMount() {
+    this.getSavedBooks();
+  }
+
+
+  getSavedBooks = () => {
+    API.getSavedBooks()
+      .then(res => 
+        this.setState({
+        result: res.data 
+      })
+      )
+      .catch(err => console.log(err));     
   };
 
-  // When this component mounts, search for the movie "The Matrix"
-  // componentDidMount() {
-  //   this.searchBooks("The Hunger Games");
-  // }
-
-  searchBooks = query => {
-    API.search(query)
-      .then(res => this.setState({ result: res.data }))
-      .catch(err => console.log(err));
-      
-  };
 
   handleInputChange = event => {
     const value = event.target.value;
@@ -34,37 +40,61 @@ class Saved extends Component {
   };
 
 
-  handleFormSubmit = event => {
+handleFormSubmit = event => {
     event.preventDefault();
     this.searchBooks(this.state.search);
   };
 
+
+
+    handleBookDelete = id => {
+      
+      API.deleteBook(id).then(() => this.getSavedBooks());
+
+      return console.log(id)
+    };
+  
+
   render() {
+    
     return (
       <Container>
-        <div heading="Search">
+
+            <div heading="Search">
               <SearchForm
                 value={this.state.search}
                 handleInputChange={this.handleInputChange}
                 handleFormSubmit={this.handleFormSubmit}
               />
-          </div>
-          <div
-            
+            </div>
+
+            <div
               heading={this.state.result.totalItems || "Search for a Book to Begin"}
             >
-              {this.state.result.totalItems ? (
-                <BookDetail
-                  title={this.state.result.items[0].volumeInfo.title}
-                  src={this.state.result.items[0].volumeInfo.imageLinks.thumbnail}
-                  authors={this.state.result.items[0].volumeInfo.authors}
-                  description={this.state.result.items[0].volumeInfo.description}
-                  link={this.state.result.items[0].selfLink}          
-                />
-              ) : (
+              {this.state.result.length === 0 ? (
                 <h3>No Results to Display</h3>
-              )}    
-        </div>
+              ) : (
+              <BookList>
+                {this.state.result.map((element, index) => {
+                  
+                  return (
+                  
+ 
+                    <BookDetail
+                    key={element._id}
+                    id={element._id}
+                    title={element.title}
+                    src={element.image}
+                    authors={element.authors}
+                    description={element.description}
+                    link={element.link} 
+                    onClick={(e) => this.handleBookDelete(element._id)}
+                    /> 
+                  )
+                })} 
+              </BookList>   
+              )}
+          </div>
       </Container>
     );
   }
